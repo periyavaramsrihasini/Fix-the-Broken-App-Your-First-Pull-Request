@@ -24,117 +24,264 @@ const apps = [
   { title: "Files", icon: "folder", notifications: 0 }
 ];
 
+
 function getStudentDisplayName(profile) {
-  return profile.fullName?.trim() || "Student";
+  return profile.name?.trim() || "Student";
 }
+
 
 function getAppCardClass(app) {
-  return app.notifications === 0 ? "app-crad" : "app-card";
+  return app.notifications === 0 
+    ? "app-card" 
+    : "app-card has-notification";
 }
 
+
 function getNotificationCount(app) {
-  return Number(app.notificationCount || 0);
+  return Number(app.notifications || 0);
 }
+
 
 function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="k-logo">K</div>
-      <div className="rail-initials">{student.initials}</div>
+      <div className="rail-initials">
+        {student.initials}
+      </div>
     </aside>
   );
 }
+
 
 function ProfileCard() {
   const displayName = getStudentDisplayName(student);
 
   return (
     <section className="profile-card">
+
       <div className="profile-copy">
-        <h1>Hi {displayName}</h1>
+
+        <h1>
+          Hi {displayName}
+        </h1>
+
         <div className="meta-row">
+
           <span className="mini-icon user-icon"></span>
           <span>{student.squad}</span>
+
           <span className="dot-spacer">-</span>
+
           <span className="mini-icon cap-icon"></span>
           <span>{student.classYear}</span>
+
         </div>
+
+
         <div className="profile-line">
           <span className="mini-icon code-icon"></span>
-          <span>{student.program}<br />({student.specialization})</span>
+
+          <span>
+            {student.program}
+            <br />
+            ({student.specialization})
+          </span>
         </div>
+
+
         <div className="profile-line">
           <span className="mini-icon building-icon"></span>
-          <span>{student.university}</span>
+
+          <span>
+            {student.university}
+          </span>
+
         </div>
+
       </div>
+
+
       <div className="university-card">
         <div className="seal"></div>
-        <div className="uni-text">A<br /><span>UNIVERSITY</span></div>
+
+        <div className="uni-text">
+          A
+          <br />
+          <span>
+            UNIVERSITY
+          </span>
+        </div>
+
       </div>
+
+
     </section>
   );
 }
 
-function DayPanel() {
-  return (
-    <section className="day-section">
-      <div className="section-title-row">
-        <h2>My Day</h2>
-        <a href="#">View Schedule <span>&gt;</span></a>
-      </div>
-      <div className="empty-day">
-        <div className="coffee-cup">
-          <div className="steam s1"></div>
-          <div className="steam s2"></div>
-          <div className="cup-lid"></div>
-          <div className="cup-body"></div>
-          <div className="cup-sleeve"></div>
-        </div>
-        <p>Looks like nothing is planned</p>
-      </div>
-    </section>
-  );
+
+
+function DayPanel(){
+
+return (
+<section className="day-section">
+
+<div className="section-title-row">
+
+<h2>
+My Day
+</h2>
+
+
+<a href="#">
+View Schedule →
+</a>
+
+
+</div>
+
+
+<div className="empty-day">
+
+<div className="coffee-cup">
+
+<div className="steam s1"></div>
+<div className="steam s2"></div>
+
+<div className="cup-lid"></div>
+<div className="cup-body"></div>
+<div className="cup-sleeve"></div>
+
+
+</div>
+
+
+<p>
+Looks like nothing is planned
+</p>
+
+
+</div>
+
+</section>
+)
+
 }
 
-function AppIcon({ type }) {
-  return <span className={`app-icon icon-${type}`}></span>;
+
+
+function AppIcon({type}){
+
+return (
+<span className={`app-icon icon-${type}`}></span>
+)
+
 }
 
-function AppCard({ app }) {
-  const notificationCount = getNotificationCount(app);
 
-  return (
-    <div className={getAppCardClass(app)}>
-      {notificationCount > 0 && <span className="badge">{notificationCount}</span>}
-      <div className="icon-box">
-        <AppIcon type={app.icon} />
-      </div>
-      <div className="app-title">{app.title}</div>
-    </div>
-  );
+
+function AppCard({app}){
+
+const count = getNotificationCount(app);
+
+
+return (
+
+<div className={getAppCardClass(app)}>
+
+
+{count > 0 && (
+
+<span className="badge">
+{count}
+</span>
+
+)}
+
+
+<div className="icon-box">
+
+<AppIcon type={app.icon}/>
+
+</div>
+
+
+<div className="app-title">
+
+{app.title}
+
+</div>
+
+
+</div>
+
+)
+
 }
 
-export default function App() {
-  const visibleApps = apps.slice(0, 10);
 
-  return (
-    <div className="shell">
-      <Sidebar />
-      <main className="content">
-        <div className="main-column">
-          <ProfileCard />
-          <DayPanel />
-        </div>
-        <aside className="apps-column">
-          <h2>My Kalvium Apps</h2>
-          <div className="apps-grid">
-            {visibleApps.map((app) => (
-              <AppCard key={app.title} app={app} />
-            ))}
-          </div>
-        </aside>
-      </main>
-    </div>
-  );
+
+export default function App(){
+
+
+return (
+
+<div className="shell">
+
+
+<Sidebar/>
+
+
+<main className="content">
+
+
+<div className="main-column">
+
+
+<ProfileCard/>
+
+
+<DayPanel/>
+
+
+</div>
+
+
+
+<aside className="apps-column">
+
+
+<h2>
+My Kalvium Apps
+</h2>
+
+
+
+<div className="apps-grid">
+
+
+{apps.map((app)=>(
+
+<AppCard 
+key={app.title}
+app={app}
+/>
+
+))}
+
+
+</div>
+
+
+</aside>
+
+
+</main>
+
+
+</div>
+
+)
+
 }
